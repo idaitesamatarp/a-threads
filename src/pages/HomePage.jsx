@@ -9,6 +9,7 @@ import ThreadForm from '../components/ThreadForm';
 export default function HomePage() {
 	const auth = useSelector((state) => state.auth);
 	const threads = useSelector((state) => state.threads);
+	const searchTerm = useSelector((state) => state.filter);
 
 	const dispatch = useDispatch();
 
@@ -16,11 +17,15 @@ export default function HomePage() {
 		dispatch(populateUsersAndThreads());
 	}, []);
 
+	const threadList = threads.filter((thread) => {
+		return thread.category.toLowerCase().includes(searchTerm.toLowerCase());
+	});
+
 	return (
 		<section>
 			<Filter threads={threads} />
 			{!auth ? <AuthInfo /> : <ThreadForm auth={auth} />}
-			<ThreadList threads={threads} />
+			<ThreadList threads={threadList} />
 		</section>
 	);
 }

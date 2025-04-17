@@ -8,6 +8,7 @@ import {
 	BiCommentDetail,
 } from 'react-icons/bi';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 export default function ThreadItem({
 	id,
@@ -22,7 +23,7 @@ export default function ThreadItem({
 	return (
 		<div
 			key={id}
-			className='flex w-full p-4 flex-col rounded-lg bg-white shadow-sm border border-slate-200 my-3'
+			className='flex w-full h-auto overflow-auto p-4 flex-col rounded-lg bg-white shadow-sm border border-slate-200 my-3'
 		>
 			<div className='flex items-center gap-4 text-slate-800'>
 				<img
@@ -53,10 +54,16 @@ export default function ThreadItem({
 			</div>
 			<div className='mt-6'>
 				<div className='text-base text-slate-600 font-light leading-normal'>
-					{parse(`${body}`)}
+					{parse(`${body}`)}{' '}
+					<Link
+						to={`/threads/${id}`}
+						className='text-sm text-blue-600 font-semibold'
+					>
+						read more...
+					</Link>
 				</div>
 			</div>
-			<div className='flex gap-3 mt-3'>
+			<div className='flex gap-3 mt-3 mb-3'>
 				<div className='inline-flex gap-1 items-center text-slate-500 cursor-pointer'>
 					<BiLike />
 					<span className='text-sm'>{upVotesBy.length} Likes</span>

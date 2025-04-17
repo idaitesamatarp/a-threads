@@ -6,6 +6,7 @@ import usersReducer from './users/reducer';
 import threadsReducer from './threads/reducer';
 import commentsReducer from './comments/reducer';
 import votesReducer from './votes/reducer';
+import filterReducer from './filter/reducer';
 
 const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ const store = configureStore({
     users: usersReducer,
     threads: threadsReducer,
     comments: commentsReducer,
-    votes: votesReducer
+    votes: votesReducer,
+    filter: filterReducer,
   },
 });
 

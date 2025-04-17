@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import api from '../../utils/api';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import { textTransform } from '../../utils/textTransform';
+import { textTransform } from '../../utils/textUtils';
 
 const ActionType = {
   RECEIVE_USERS: 'RECEIVE_USERS',

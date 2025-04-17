@@ -1,6 +1,19 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchTerm } from '../states/filter/action';
 
 export default function FilterSearch() {
+	const searchTerm = useSelector((state) => state.searchTerm);
+	const dispatch = useDispatch();
+
+	const onSearch = (e) => {
+		const { value } = e.target;
+
+		if (value !== '' && value.length < 3) return;
+
+		dispatch(setSearchTerm(e.target.value));
+	};
+
 	return (
 		<div className='relative'>
 			<input
@@ -18,6 +31,8 @@ export default function FilterSearch() {
           hover:border-slate-300 
           shadow-sm'
 				placeholder='Search a thread by category...'
+				value={searchTerm}
+				onChange={onSearch}
 			/>
 			<span className='absolute inset-y-0 end-0 flex items-center pe-3 pointer-events-none'>
 				<svg

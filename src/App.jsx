@@ -31,8 +31,8 @@ function App() {
 
 	return (
 		<>
-			<Loading />
 			<header className='w-full sticky top-0 z-[9999]'>
+				<Loading />
 				<Navbar auth={auth} signOut={onSignOut} />
 			</header>
 			<main className='container mx-auto'>

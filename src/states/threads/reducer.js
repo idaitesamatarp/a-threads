@@ -10,6 +10,8 @@ function threadsReducer(threads = [], action = {}) {
       return threads.find((thread) =>
         thread.id === action.payload.threadId
       );
+    case ActionType.SHOW_THREADS_BY_CATEGORY:
+      return action.payload.searchTerm;
     default:
       return threads;
   }
