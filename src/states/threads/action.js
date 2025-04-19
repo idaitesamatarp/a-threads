@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
 import api from "../../utils/api";
+import { hideLoading, showLoading } from "react-redux-loading-bar";
 
 const ActionType = {
   GET_THREADS: 'GET_THREADS',
@@ -20,7 +21,7 @@ const createThreadActionCreator = (thread) => {
   return {
     type: ActionType.CREATE_THREADS,
     payload: {
-      thread
+      thread,
     }
   }
 }
@@ -35,11 +36,13 @@ const showThreadActionCreator = (threadId) => {
 }
 
 function createThread({ title, body, category }) {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(showLoading());
     try {
-      const thread = await api.threads.createThread({ title, body, category });
-      dispatch(createThreadActionCreator(thread));
+      const { auth } = getState();
+
+      const result = await api.threads.createThread({ title, body, category });
+      dispatch(createThreadActionCreator({ ...result.data.thread, user: auth }));
     } catch (error) {
       toast.error(`Oops, ${error.response.data.message}`);
     }

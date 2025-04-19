@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import parse from 'html-react-parser';
 import {
 	BiLike,
@@ -8,22 +8,33 @@ import {
 	BiCommentDetail,
 } from 'react-icons/bi';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { ShowMore } from '@re-dev/react-truncate';
+import PropTypes from 'prop-types';
 
 export default function ThreadItem({
 	id,
 	user,
 	category,
 	createdAt,
+	title,
 	body,
 	upVotesBy,
 	downVotesBy,
 	totalComments,
 }) {
+	const navigate = useNavigate();
+
 	return (
 		<div
 			key={id}
-			className='flex w-full h-auto overflow-auto p-4 flex-col rounded-lg bg-white shadow-sm border border-slate-200 my-3'
+			className='flex 
+			w-full h-auto 
+			overflow-auto 
+			p-4 
+			flex-col 
+			rounded-lg 
+			bg-white shadow-sm border border-slate-200 my-3'
 		>
 			<div className='flex items-center gap-4 text-slate-800'>
 				<img
@@ -53,14 +64,32 @@ export default function ThreadItem({
 				</div>
 			</div>
 			<div className='mt-6'>
+				<h5
+					className='mb-2 
+				text-blue-500 text-xl font-semibold 
+					cursor-pointer'
+					onClick={() => navigate(`/threads/${id}`)}
+				>
+					{title}
+				</h5>
+
 				<div className='text-base text-slate-600 font-light leading-normal'>
-					{parse(`${body}`)}{' '}
-					<Link
-						to={`/threads/${id}`}
-						className='text-sm text-blue-600 font-semibold'
+					<ShowMore
+						lines={3}
+						more={
+							<>
+								<span>... </span>
+								<Link
+									to={`/threads/${id}`}
+									className='text-sm text-blue-500 font-semibold'
+								>
+									read more
+								</Link>
+							</>
+						}
 					>
-						read more...
-					</Link>
+						{parse(`${body}`)}
+					</ShowMore>
 				</div>
 			</div>
 			<div className='flex gap-3 mt-3 mb-3'>
@@ -86,3 +115,22 @@ export default function ThreadItem({
 		</div>
 	);
 }
+
+const userShape = {
+	name: PropTypes.string.isRequired,
+	avatar: PropTypes.string.isRequired,
+};
+
+const threadItemShape = {
+	id: PropTypes.string.isRequired,
+	category: PropTypes.string.isRequired,
+	createdAt: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+	body: PropTypes.string.isRequired,
+	upVotesBy: PropTypes.array.isRequired,
+	downVotesBy: PropTypes.array.isRequired,
+	totalComments: PropTypes.number.isRequired,
+	user: PropTypes.shape(userShape).isRequired,
+};
+
+export { threadItemShape };

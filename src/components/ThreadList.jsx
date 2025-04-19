@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import ThreadItem from './ThreadItem';
+import ThreadItem, { threadItemShape } from './ThreadItem';
 
 export default function ThreadList({ threads }) {
 	return (
@@ -12,5 +12,5 @@ export default function ThreadList({ threads }) {
 }
 
 ThreadList.proptype = {
-	threads: PropTypes.array.isRequired,
+	threads: PropTypes.arrayOf(PropTypes.shape(threadItemShape)).isRequired,
 };

@@ -9,6 +9,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import NotFoundPages from './pages/NotFoundPages';
 import { asyncUnsetAuthUser } from './states/auth/action';
+import DetailPage from './pages/DetailPage';
 
 function App() {
 	const auth = useSelector((state) => state.auth);
@@ -45,6 +46,7 @@ function App() {
 								<Route path='/register' element={<RegisterPage />} />
 							</>
 						) : null}
+						<Route path='/threads/:id' element={<DetailPage />} />
 						<Route path='*' element={<NotFoundPages />} />
 					</Routes>
 				</div>
