@@ -11,10 +11,12 @@ import moment from 'moment';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShowMore } from '@re-dev/react-truncate';
 import PropTypes from 'prop-types';
+import toast from 'react-hot-toast';
 
 export default function ThreadItem({
 	id,
 	user,
+	authUserId,
 	category,
 	createdAt,
 	title,
@@ -22,9 +24,37 @@ export default function ThreadItem({
 	upVotesBy,
 	downVotesBy,
 	totalComments,
+	like,
+	dislike,
+	neutralVote,
 }) {
 	const navigate = useNavigate();
+	const isThreadLiked = upVotesBy.includes(authUserId);
+	const isThreadDisliked = downVotesBy.includes(authUserId);
 
+	const onHandleLike = () => {
+		if (!authUserId)
+			return toast.error('Please login first to like a thread !');
+		like(id);
+	};
+
+	const onHandleDislike = () => {
+		if (!authUserId)
+			return toast.error('Please login first to dislike a thread !');
+		dislike(id);
+	};
+
+	const onHandleNeutral = (voteType) => {
+		if (!authUserId)
+			return toast.error(
+				'Please login first to unlike or undislike a thread !'
+			);
+		neutralVote(id, voteType);
+	};
+
+	const navigateToDetail = () => {
+		navigate(`/threads/${id}`);
+	};
 	return (
 		<div
 			key={id}
@@ -68,7 +98,7 @@ export default function ThreadItem({
 					className='mb-2 
 				text-blue-500 text-xl font-semibold 
 					cursor-pointer'
-					onClick={() => navigate(`/threads/${id}`)}
+					onClick={navigateToDetail}
 				>
 					{title}
 				</h5>
@@ -93,21 +123,38 @@ export default function ThreadItem({
 				</div>
 			</div>
 			<div className='flex gap-3 mt-3 mb-3'>
-				<div className='inline-flex gap-1 items-center text-slate-500 cursor-pointer'>
-					<BiLike />
+				<div
+					className='inline-flex gap-1 items-center text-slate-500 cursor-pointer'
+					onClick={() => {
+						isThreadLiked ? onHandleNeutral('Like') : onHandleLike();
+					}}
+				>
+					{isThreadLiked ? (
+						<BiSolidLike className='text-red-600' />
+					) : (
+						<BiLike />
+					)}
 					<span className='text-sm'>{upVotesBy.length} Likes</span>
 				</div>
 
 				<div className='inline-block h-[25px] min-h-[1em] w-0.5 self-stretch bg-slate-100'></div>
 
-				<div className='inline-flex gap-1 items-center text-slate-500 cursor-pointer'>
-					<BiDislike />
+				<div
+					className='inline-flex gap-1 items-center text-slate-500 cursor-pointer'
+					onClick={() => {
+						isThreadDisliked ? onHandleNeutral('Dislike') : onHandleDislike();
+					}}
+				>
+					{isThreadDisliked ? <BiSolidDislike /> : <BiDislike />}
 					<span className='text-sm'>{downVotesBy.length} Dislikes</span>
 				</div>
 
 				<div className='inline-block h-[25px] min-h-[1em] w-0.5 self-stretch bg-slate-100'></div>
 
-				<div className='inline-flex gap-1 items-center text-slate-500 cursor-pointer'>
+				<div
+					className='inline-flex gap-1 items-center text-slate-500 cursor-pointer'
+					onClick={navigateToDetail}
+				>
 					<BiCommentDetail />
 					<span className='text-sm'>{totalComments} Replies</span>
 				</div>
@@ -117,7 +164,9 @@ export default function ThreadItem({
 }
 
 const userShape = {
+	id: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
+	email: PropTypes.string.isRequired,
 	avatar: PropTypes.string.isRequired,
 };
 
@@ -131,6 +180,14 @@ const threadItemShape = {
 	downVotesBy: PropTypes.array.isRequired,
 	totalComments: PropTypes.number.isRequired,
 	user: PropTypes.shape(userShape).isRequired,
+	authUserId: PropTypes.string.isRequired,
+};
+
+ThreadItem.proptype = {
+	...threadItemShape,
+	like: PropTypes.func.isRequired,
+	dislike: PropTypes.func.isRequired,
+	neutralVote: PropTypes.func.isRequired,
 };
 
 export { threadItemShape };

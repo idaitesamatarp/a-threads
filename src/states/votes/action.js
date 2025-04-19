@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
 import api from "../../utils/api";
+import { hideLoading, showLoading } from "react-redux-loading-bar";
 
 const ActionType = {
   TOGGLE_UP_VOTE_THREAD: 'TOGGLE_UP_VOTE_THREAD',
@@ -10,30 +11,22 @@ const ActionType = {
   TOGGLE_NEUTRAL_VOTE_COMMENT: 'TOGGLE_NEUTRAL_VOTE_COMMENT',
 };
 
-function toggleUpVoteThreadActionCreator({ threadId, userId }) {
+function toggleUpVoteThreadActionCreator({ threadId, authUserId }) {
   return {
     type: ActionType.TOGGLE_UP_VOTE_THREAD,
     payload: {
       threadId,
-      userId
+      authUserId
     },
   };
 }
 
-function toggleDownVoteThreadActionCreator({ threadId }) {
+function toggleDownVoteThreadActionCreator({ threadId, authUserId }) {
   return {
     type: ActionType.TOGGLE_DOWN_VOTE_THREAD,
     payload: {
       threadId,
-    },
-  };
-}
-
-function toggleNeutralVoteThreadActionCreator({ threadId }) {
-  return {
-    type: ActionType.TOGGLE_NEUTRAL_VOTE_THREAD,
-    payload: {
-      threadId,
+      authUserId
     },
   };
 }
@@ -68,19 +61,59 @@ function toggleNeutralVoteCommentActionCreator({ threadId, commentId }) {
   };
 }
 
-function asyncToogleUpVoteThread(threadId) {
+function toggleUpVoteThread(threadId) {
   return async (dispatch, getState) => {
     dispatch(showLoading());
 
     const { auth } = getState();
-    dispatch(toggleUpVoteThreadActionCreator({ threadId, userId: auth.id }));
+
+    dispatch(toggleUpVoteThreadActionCreator({ threadId, authUserId: auth.id }));
 
     try {
       await api.votes.upVoteThread(threadId);
-      toast.success("You liked this thread !");
+      toast.success("You liked this thread.");
     } catch (error) {
-      alert(error.message);
-      dispatch(toggleLikeTalkActionCreator({ threadId, userId: auth.id }));
+      toast.error(error.message);
+      dispatch(toggleUpVoteThreadActionCreator({ threadId, authUserId: auth.id }));
+    }
+    dispatch(hideLoading());
+  };
+}
+
+function toggleDownVoteThread(threadId) {
+  return async (dispatch, getState) => {
+    dispatch(showLoading());
+
+    const { auth } = getState();
+    dispatch(toggleDownVoteThreadActionCreator({ threadId, authUserId: auth.id }));
+
+    try {
+      await api.votes.downVoteThread(threadId);
+      toast.success("You disliked this thread.");
+    } catch (error) {
+      toast.error(error.message);
+      dispatch(toggleDownVoteThreadActionCreator({ threadId, authUserId: auth.id }));
+    }
+    dispatch(hideLoading());
+  };
+}
+
+function toggleNeutralVoteThread(threadId, voteType) {
+  return async (dispatch, getState) => {
+    dispatch(showLoading());
+
+    const { auth } = getState();
+    voteType === "Like"
+      ? dispatch(toggleUpVoteThreadActionCreator({ threadId, authUserId: auth.id }))
+      : dispatch(toggleDownVoteThreadActionCreator({ threadId, authUserId: auth.id }))
+
+    try {
+      await api.votes.neutralVoteThread(threadId);
+    } catch (error) {
+      toast.error(error.message);
+      voteType === "Like"
+        ? dispatch(toggleUpVoteThreadActionCreator({ threadId, authUserId: auth.id }))
+        : dispatch(toggleDownVoteThreadActionCreator({ threadId, authUserId: auth.id }))
     }
     dispatch(hideLoading());
   };
@@ -90,9 +123,10 @@ export {
   ActionType,
   toggleUpVoteThreadActionCreator,
   toggleDownVoteThreadActionCreator,
-  toggleNeutralVoteThreadActionCreator,
   toggleUpVoteCommentActionCreator,
   toggleDownVoteCommentActionCreator,
   toggleNeutralVoteCommentActionCreator,
-  asyncToogleUpVoteThread,
+  toggleUpVoteThread,
+  toggleDownVoteThread,
+  toggleNeutralVoteThread
 }

@@ -6,6 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { populateUsersAndThreads } from '../states/shared/action';
 import ThreadForm from '../components/ThreadForm';
 import { createThread } from '../states/threads/action';
+import {
+	toggleDownVoteThread,
+	toggleNeutralVoteThread,
+	toggleUpVoteThread,
+} from '../states/votes/action';
 
 export default function HomePage() {
 	const auth = useSelector((state) => state.auth);
@@ -22,10 +27,28 @@ export default function HomePage() {
 		dispatch(createThread({ title, body, category }));
 	};
 
-	const threadList = threads.filter((thread) => {
-		return thread.category.toLowerCase().includes(searchTerm.toLowerCase());
-	});
-	console.log('list:', threadList);
+	const onLikeThread = (threadId) => {
+		dispatch(toggleUpVoteThread(threadId));
+	};
+
+	const onDislikeThread = (threadId) => {
+		dispatch(toggleDownVoteThread(threadId));
+	};
+
+	const onNeutralThread = (threadId, voteType) => {
+		dispatch(toggleNeutralVoteThread(threadId, voteType));
+	};
+
+	const threadList = threads
+		.map((thread) => {
+			return {
+				...thread,
+				authUserId: auth?.id || null,
+			};
+		})
+		.filter((thread) =>
+			thread.category.toLowerCase().includes(searchTerm.toLowerCase())
+		);
 
 	return (
 		<section>
@@ -35,7 +58,12 @@ export default function HomePage() {
 			) : (
 				<ThreadForm auth={auth} addThread={onAddThread} />
 			)}
-			<ThreadList threads={threadList} />
+			<ThreadList
+				threads={threadList}
+				likeThread={onLikeThread}
+				dislikeThread={onDislikeThread}
+				neutralThread={onNeutralThread}
+			/>
 		</section>
 	);
 }
