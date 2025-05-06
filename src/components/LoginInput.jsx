@@ -34,7 +34,7 @@ export default function LoginInput({ login }) {
               placeholder:text-gray-400
               focus:outline-2 focus:-outline-offset-2 focus:outline-slate-600
               sm:text-sm/6'
-						placeholder='Email'
+						placeholder='Username'
 						value={email}
 						onChange={onEmailChange}
 					/>
