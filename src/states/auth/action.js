@@ -4,8 +4,8 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { textTransform } from '../../utils/textUtils';
 
 const ActionType = {
-  SET_AUTH_USER: 'SET_AUTH_USER',
-  UNSET_AUTH_USER: 'UNSET_AUTH_USER'
+  SET_AUTH_USER: 'auth-user/SET',
+  UNSET_AUTH_USER: 'auth-user/UNSET'
 };
 
 const setAuthUserActionCreator = (authUser) => {

@@ -3,7 +3,7 @@ import api from '../../utils/api';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 const ActionType = {
-  GET_LEADERBOARD: 'GET_LEADERBOARD',
+  GET_LEADERBOARD: 'leaderboards/GET',
 };
 
 const getLeaderboardActionCreator = (leaderboards) => {

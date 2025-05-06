@@ -1,5 +1,5 @@
 const ActionType = {
-  SEARCH_BY_CATEGORY: 'SEARCH_BY_CATEGORY'
+  SEARCH_BY_CATEGORY: 'category/SEARCH'
 };
 
 const setSearchTerm = (searchTerm) => {

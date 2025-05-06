@@ -4,7 +4,7 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { textTransform } from '../../utils/textUtils';
 
 const ActionType = {
-  RECEIVE_USERS: 'RECEIVE_USERS',
+  RECEIVE_USERS: 'users/RECEIVE',
 };
 
 const receiveUsersActionCreator = (users) => {

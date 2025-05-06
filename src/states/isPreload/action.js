@@ -6,7 +6,7 @@ import { setAuthUserActionCreator } from '../auth/action';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 const ActionType = {
-  SET_IS_PRELOAD: 'SET_IS_PRELOAD',
+  SET_IS_PRELOAD: 'is-preload/SET',
 };
 
 const setIsPreloadActionCreator = (isPreload) => {

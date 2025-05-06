@@ -3,8 +3,8 @@ import api from '../../utils/api';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 const ActionType = {
-  GET_THREADS: 'GET_THREADS',
-  CREATE_THREAD: 'CREATE_THREAD',
+  GET_THREADS: 'threads/GET',
+  CREATE_THREAD: 'thread/CREATE',
 };
 
 const getAllThreadsActionCreator = (threads) => {

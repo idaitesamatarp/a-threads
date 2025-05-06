@@ -6,7 +6,7 @@
 *  - should return the thread detail when given by GET_THREAD_DETAIL action
 *  - should return the thread detail with the toggled like thread when given by TOGGLE_UP_VOTE_THREAD_DETAIL action
 *  - should return the thread detail with the toggled dislike thread when given by TOGGLE_DOWN_VOTE_THREAD_DETAIL action
-*  - should return the threads with the new comment when given by CREATE_COMMENT_THREAD action
+*  - should return the threads with the new comment when given by CREATE_COMMENT_THREAD_DETAIL action
 *  - should return the thread detail with the toggled like comment thread when given by TOGGLE_UP_VOTE_COMMENT action
 *  - should return the thread detail with the toggled dislike comment thread when given by TOGGLE_DOWN_VOTE_COMMENT action
 *
@@ -14,6 +14,8 @@
 
 import { describe, it, expect } from 'vitest';
 import threadDetailReducer from './reducer';
+import { ActionType } from './action';
+import { ActionType as ActionTypeVote } from '../votes/action';
 
 describe('talkReducers function', () => {
   it('should return the initial state when given by unknown action', () => {
@@ -32,7 +34,7 @@ describe('talkReducers function', () => {
     // arrange
     const initialState = null;
     const action = {
-      type: 'GET_THREAD_DETAIL',
+      type: ActionType.GET_THREAD_DETAIL,
       payload: {
         threadDetail: {
           'id': 'thread-7kpJyjMQ47Z25rgG',
@@ -78,7 +80,7 @@ describe('talkReducers function', () => {
     };
 
     const action = {
-      type: 'TOGGLE_UP_VOTE_THREAD_DETAIL',
+      type: ActionType.TOGGLE_UP_VOTE_THREAD_DETAIL,
       payload: {
         'threadId': 'thread-7kpJyjMQ47Z25rgG',
         'authUserId': 'user-jVNZrrewKBs777kB'
@@ -120,7 +122,7 @@ describe('talkReducers function', () => {
     };
 
     const action = {
-      type: 'TOGGLE_DOWN_VOTE_THREAD_DETAIL',
+      type: ActionType.TOGGLE_DOWN_VOTE_THREAD_DETAIL,
       payload: {
         'threadId': 'thread-7kpJyjMQ47Z25rgG',
         'authUserId': 'user-jVNZrrewKBs777kB'
@@ -143,7 +145,7 @@ describe('talkReducers function', () => {
     expect(nextState2).toEqual(initialState);
   });
 
-  it('should return the thread detail with the new comment when given by CREATE_COMMENT_THREAD action', () => {
+  it('should return the thread detail with the new comment when given by CREATE_COMMENT_THREAD_DETAIL action', () => {
     // arrange
     const initialState = {
       'id': 'thread-7kpJyjMQ47Z25rgG',
@@ -162,7 +164,7 @@ describe('talkReducers function', () => {
     };
 
     const action = {
-      type: 'CREATE_COMMENT_THREAD',
+      type: ActionType.CREATE_COMMENT_THREAD_DETAIL,
       payload: {
         'threadId': 'thread-7kpJyjMQ47Z25rgG',
         'authUserId': 'Thread yang bagus'
@@ -212,7 +214,7 @@ describe('talkReducers function', () => {
     };
 
     const action = {
-      type: 'TOGGLE_UP_VOTE_COMMENT',
+      type: ActionTypeVote.TOGGLE_UP_VOTE_COMMENT,
       payload: {
         'commentId': 'comment-eCCqwNDAwNRD5vri',
         'authUserId': 'user-AQ0V4znjznsaXs5N',
@@ -272,7 +274,7 @@ describe('talkReducers function', () => {
     };
 
     const action = {
-      type: 'TOGGLE_DOWN_VOTE_COMMENT',
+      type: ActionTypeVote.TOGGLE_DOWN_VOTE_COMMENT,
       payload: {
         'commentId': 'comment-eCCqwNDAwNRD5vri',
         'authUserId': 'user-AQ0V4znjznsaXs5N',

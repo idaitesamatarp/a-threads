@@ -3,11 +3,11 @@ import api from '../../utils/api';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 const ActionType = {
-  GET_THREAD_DETAIL: 'GET_THREAD_DETAIL',
-  CLEAR_THREAD_DETAIL: 'CLEAR_THREAD_DETAIL',
-  CREATE_COMMENT_THREAD: 'CREATE_COMMENT_THREAD',
-  TOGGLE_UP_VOTE_THREAD_DETAIL: 'TOGGLE_UP_VOTE_THREAD_DETAIL',
-  TOGGLE_DOWN_VOTE_THREAD_DETAIL: 'TOGGLE_DOWN_VOTE_THREAD_DETAIL',
+  GET_THREAD_DETAIL: 'thread-detail/GET',
+  CLEAR_THREAD_DETAIL: 'thread-detail/CLEAR',
+  CREATE_COMMENT_THREAD_DETAIL: 'thread-detail/CREATE_COMMENT',
+  TOGGLE_UP_VOTE_THREAD_DETAIL: 'thread-detail/TOGGLE_UP_VOTE',
+  TOGGLE_DOWN_VOTE_THREAD_DETAIL: 'thread-detail/TOGGLE_DOWN_VOTE',
 };
 
 const getThreadDetailActionCreator = (threadDetail) => {
@@ -47,7 +47,7 @@ function toggleDownVoteThreadDetailActionCreator({ threadId, authUserId }) {
 
 const createComentThreadActionCreator = ({ threadId, content }) => {
   return {
-    type: ActionType.CREATE_COMMENT_THREAD,
+    type: ActionType.CREATE_COMMENT_THREAD_DETAIL,
     payload: {
       threadId,
       content,
