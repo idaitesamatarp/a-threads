@@ -13,7 +13,7 @@ export default function Navbar({ auth, signOut }) {
 				<div className='flex items-center flex-shrink-0 text-white'>
 					<img src={forumLogo} alt='logo' width={25} className='mr-2' />
 					<span className='font-semibold text-xl tracking-tight'>
-						a&apos; Threads {auth ? `for ${auth?.name}` : ''}
+						a&apos; Threads App {auth ? `for ${auth?.name}` : ''}
 					</span>
 				</div>
 
