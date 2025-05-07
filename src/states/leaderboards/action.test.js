@@ -1,7 +1,7 @@
 /**
- * skenario test
+ * test scenario for getLeaderboards
  *
- * - toggleUpVoteThread thunk
+ * - getLeaderboards action
  *  - should dispatch action correctly when data fetching success
  *  - should dispatch action and call alert correctly when data fetching failed
  */

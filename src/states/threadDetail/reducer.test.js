@@ -1,7 +1,7 @@
 /**
-* test scenario for threadsReducer
+* test scenario for threadDetailReducer
 *
-* - threadsReducers function
+* - threadDetailReducer function
 *  - should return the initial state when given by unknown action
 *  - should return the thread detail when given by GET_THREAD_DETAIL action
 *  - should return the thread detail with the toggled like thread when given by TOGGLE_UP_VOTE_THREAD_DETAIL action
