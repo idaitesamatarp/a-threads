@@ -16,6 +16,7 @@ export default function FilterSearch() {
   return (
     <div className='relative'>
       <input
+        data-testid='search-category'
         id='filterSearch'
         className='w-full
           bg-transparent
