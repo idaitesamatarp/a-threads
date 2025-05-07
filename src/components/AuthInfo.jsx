@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function AuthInfo() {
   return (
     <div
@@ -6,13 +8,13 @@ export default function AuthInfo() {
     >
       <span className='block text-sm'>
 				Please{' '}
-        <a className='font-bold text-blue-700' href='/login' role='link'>
+        <Link to='/login' className='font-bold text-blue-700' role='link'>
 					Login
-        </a>{' '}
+        </Link>{' '}
 				or{' '}
-        <a className='font-bold text-blue-700' href='/register' role='link'>
+        <Link to='/register' className='font-bold text-blue-700' role='link'>
 					Register
-        </a>{' '}
+        </Link>{' '}
 				to create, comment, or like a topic.
       </span>
     </div>

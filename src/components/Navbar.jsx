@@ -18,14 +18,14 @@ export default function Navbar({ auth, signOut }) {
         </div>
 
         <div className='inline-flex gap-5'>
-          <a
-            href='/'
+          <Link
+            to='/'
             className='text-white'
             data-tooltip-id='thread'
             data-tooltip-content='Threads'
           >
             <HiChatBubbleBottomCenterText size={25} />
-          </a>
+          </Link>
           <Tooltip
             id='thread'
             style={{
@@ -34,14 +34,14 @@ export default function Navbar({ auth, signOut }) {
             }}
           />
 
-          <a
-            href='/leaderboards'
+          <Link
+            to='/leaderboards'
             className='text-white'
             data-tooltip-id='leaderboards'
             data-tooltip-content='Leaderboards'
           >
             <MdLeaderboard size={25} />
-          </a>
+          </Link>
           <Tooltip
             id='leaderboards'
             style={{
