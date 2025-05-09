@@ -24,13 +24,13 @@ export default function LeaderboardPage() {
   const columns = [
     {
       name: 'Rank',
-      selector: (row, index) => index + 1,
       center: 'true',
-      width: '120px',
+      width: '200px',
+      selector: (row, index) => index + 1,
     },
     {
       name: 'Name',
-      grow: 3,
+      width: '300px',
       cell: (row) => {
         return (
           <div className='flex items-center gap-4'>
@@ -49,8 +49,8 @@ export default function LeaderboardPage() {
     },
     {
       name: 'Score',
-      selector: (row) => row.score,
       center: 'true',
+      selector: (row) => row.score,
     },
   ];
 
@@ -79,8 +79,9 @@ export default function LeaderboardPage() {
         columns={columns}
         data={leaderboards?.data?.leaderboards || []}
         pagination
-        responsive
         striped
+        fixedHeader
+        responsive
         customStyles={customStyles}
       />
 
